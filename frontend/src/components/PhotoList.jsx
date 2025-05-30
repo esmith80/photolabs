@@ -1,69 +1,32 @@
 import "../styles/PhotoList.scss";
 import PhotoListItem from "./PhotoListItem";
+import photos from "../mocks/photos"
+import { useState } from 'react'
 
-const sampleDataForPhotoList = [
-  {
-    id: 1,
-    location: {
-      city: "Montreal",
-      country: "Canada",
-    },
-    urls: {
-      full: "/Image-1-Full.jpeg",
-      regular: "/Image-1-Regular.jpeg",
-    },
-    user: {
-      username: "exampleuser",
-      name: "Joe Example",
-      profile: "/profile-1.jpg",
-    },
-  },
-  {
-    id: 2,
-    location: {
-      city: "Toronto",
-      country: "Canada",
-    },
-    urls: {
-      full: "/Image-2-Full.jpeg",
-      regular: "/Image-2-Regular.jpeg",
-    },
-    user: {
-      username: "exampleuser",
-      name: "Joe Example",
-      profile: "/profile-1.jpg",
-    },
-  },
-  {
-    id: 3,
-    location: {
-      city: "Ottawa",
-      country: "Canada",
-    },
-    urls: {
-      full: "/Image-3-Full.jpeg",
-      regular: "/Image-3-Regular.jpeg",
-    },
-    user: {
-      username: "exampleuser",
-      name: "Joe Example",
-      profile: "/profile-1.jpg",
-    },
-  },
-];
 
 const PhotoList = () => {
+  const [favePhotos, setFavePhotos] = useState([])
+
+  const toggleFave = (photoId) => {
+    setFavePhotos((prev) => prev.includes(photoId) ? prev.filter((id) => id !== photoId) : [...prev, photoId]);
+  };
+  
   return (
     <ul className="photo-list">
-      {sampleDataForPhotoList.map((photo) => {
+      {photos.map((photo) => {
         const { id, urls, user, location } = photo;
+        const isFave = favePhotos.includes(photo.id);
+
         return (
           <PhotoListItem 
-            id={id}
+            key={id}
+            photoId={id}
             imageSource={urls.regular}
             username={user.name}
             location={`${location.city}, ${location.country}`}
-            profile={user.profile}       
+            profile={user.profile} 
+            isFave={isFave}  
+            onToggleFave={toggleFave}
           />
         )
       })}

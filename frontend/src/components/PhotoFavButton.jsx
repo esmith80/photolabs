@@ -2,20 +2,13 @@ import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 import { useState } from 'react';
 
-const PhotoFavButton = () => {
-
-  const [heartIsRed, setHeart] = useState(false)
-
-  const changeColor = () => {
-    console.log(`clicked! make the heart ${heartIsRed ? 'NOT red' : 'red'}`)
-    setHeart(!heartIsRed)
-  }
+const PhotoFavButton = ({isFave, photoId, onToggleFave}) => {
 
   return (
-    <div className="photo-list__fav-icon" onClick={changeColor}>
+    <div className="photo-list__fav-icon" onClick={() => onToggleFave(photoId)}>
       <div className="photo-list__fav-icon-svg">
         <FavIcon 
-          selected={heartIsRed}
+          selected={isFave}
         />
       </div>
     </div>
